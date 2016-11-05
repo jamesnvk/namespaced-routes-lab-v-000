@@ -25,7 +25,12 @@ class SongsController < ApplicationController
   end
 
   def new
-    @song = Song.new
+    @preference = Preference.first_or_create(allow_create_artists: false, allow_create_artists: false)
+    if @preference.allow_create_songs && @preference.allow_create_artists
+      @song = Song.new
+    else
+      redirect_to songs_path
+    end
   end
 
   def create
